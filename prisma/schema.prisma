@@ -1,0 +1,82 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Company {
+  id                  Int      @id @default(autoincrement())
+  companyCode         String   @db.VarChar(255)
+  companyName         String   @db.VarChar(255)
+  companyAddress      String   @db.VarChar(255)
+  gstn                String   @db.VarChar(255)
+  panCardNumber       String   @db.VarChar(255)
+  contactPersonName   String   @db.VarChar(255)
+  contactPersonNumber String   @db.VarChar(14)
+  paymentTerms        String   @db.VarChar(500)
+  bankName            String   @db.VarChar(255)
+  accountName         String   @db.VarChar(255)
+  bankAccountNumber   String   @db.VarChar(255)
+  ifscCode            String   @db.VarChar(255)
+  micr                String   @db.VarChar(255)
+  createdAt           DateTime @default(now()) @db.Timestamp(6)
+  updatedAt           DateTime @default(now()) @db.Timestamp(6)
+  isDeleted           Boolean  @default(false)
+}
+
+model Employee {
+  id                  Int      @id @default(autoincrement())
+  employeeType        String   @db.VarChar(255)
+  companyCode         String   @db.VarChar(255)
+  resumeMasterNumber  Int      @db.Int
+  name                String   @db.VarChar(255)
+  alternativeName     String   @db.VarChar(255)
+  age                 Int      @db.Int
+  skillSet            String   @db.VarChar(255)
+  experience          Int      @db.Int
+  timing              String   @db.VarChar(255)
+  contactNumber1      String   @db.VarChar(14)
+  contactNumber2      String   @db.VarChar(14)
+  remarks             String   @db.VarChar(255)
+  referredBy          String   @db.VarChar(255)
+  createdBy           String   @db.VarChar(255)
+  ndaUpload           String   @db.VarChar(255)
+  vendorProfiles      String   @db.VarChar(255)
+  createdAt           DateTime @default(now()) @db.Timestamp(6)
+  updatedAt           DateTime @default(now()) @db.Timestamp(6)
+  isDeleted           Boolean  @default(false)
+}
+
+model Vendor {
+  id                  Int      @id @default(autoincrement())
+  vendorCode          String   @db.VarChar(255)
+  vendorName          String   @db.VarChar(255)
+  vendorAddress       String   @db.VarChar(255)
+  gstn                String   @db.VarChar(255)
+  panCardNumber       String   @db.VarChar(255)
+  contactPersonName   String   @db.VarChar(255)
+  contactPersonNumber String   @db.VarChar(14)
+  paymentTerms        String   @db.VarChar(500)
+  createdAt           DateTime @default(now()) @db.Timestamp(6)
+  updatedAt           DateTime @default(now()) @db.Timestamp(6)
+  isDeleted           Boolean  @default(false)
+}
+
+model Customer {
+  id                  Int      @id @default(autoincrement())
+  customerCode          String   @db.VarChar(255)
+  customerName          String   @db.VarChar(255)
+  customerAddress       String   @db.VarChar(255)
+  country             String   @db.VarChar(255)
+  gstn                String   @db.VarChar(255)
+  panCardNumber       String   @db.VarChar(255)
+  contactPersonName   String   @db.VarChar(255)
+  contactPersonNumber String   @db.VarChar(14)
+  paymentTerms        String   @db.VarChar(500)
+  createdAt           DateTime @default(now()) @db.Timestamp(6)
+  updatedAt           DateTime @default(now()) @db.Timestamp(6)
+  isDeleted           Boolean  @default(false)
+}

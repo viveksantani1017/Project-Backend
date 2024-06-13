@@ -1,0 +1,51 @@
+@URL=http://localhost:3000
+@Token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE3MTc4NzU2MzEsImV4cCI6MTc0OTQxMTYzMSwiYXVkIjoiIiwic3ViIjoiIiwicm9sZSI6IkFkbWluIiwidXNlcklkIjoiMSJ9.wkkTCXXNSRj79juQyhZ8bMGoLHcANRyLKSa6YqM2gnE
+
+
+###
+GET {{URL}}/api/customer
+Authorization: Bearer {{Token}}
+
+
+###
+GET {{URL}}/api/customer/3
+Authorization: Bearer {{Token}}
+
+
+###
+POST {{URL}}/api/customer
+Content-Type: application/json
+Authorization: Bearer {{Token}}
+
+{
+    "customerCode": "string",
+    "customerName": "string",
+    "customerAddress": "string",
+    "gstn": "string",
+    "panCardNumber": "string",
+    "contactPersonName": "string",
+    "contactPersonNumber": "string",
+    "paymentTerms": "string",
+}
+
+
+###
+PUT {{URL}}/api/customer/1
+Content-Type: application/json
+Authorization: Bearer {{Token}}
+
+{
+    "customerCode": "updated",
+    "customerName": "updated",
+    "customerAddress": "updated",
+    "gstn": "updated",
+    "panCardNumber": "updated",
+    "contactPersonName": "updated",
+    "contactPersonNumber": "updated",
+    "paymentTerms": "updated",
+}
+
+
+###
+DELETE {{URL}}/api/customer/2
+Authorization: Bearer {{Token}}

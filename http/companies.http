@@ -1,0 +1,63 @@
+@URL=http://localhost:3000
+@Token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE3MTc4NzU2MzEsImV4cCI6MTc0OTQxMTYzMSwiYXVkIjoiIiwic3ViIjoiIiwicm9sZSI6IkFkbWluIiwidXNlcklkIjoiMSJ9.wkkTCXXNSRj79juQyhZ8bMGoLHcANRyLKSa6YqM2gnE
+
+
+###
+GET {{URL}}/api/companies
+Authorization: Bearer {{Token}}
+
+
+###
+GET {{URL}}/api/companies/1
+Authorization: Bearer {{Token}}
+
+
+###
+POST {{URL}}/api/companies
+Content-Type: application/json
+Authorization: Bearer {{Token}}
+
+{
+    "companyCode" : "Test companyCode",
+    "companyName" : "Test companyName",
+    "companyAddress" : "Test companyAddress",
+    "gstn" : "Test gstn",
+    "panCardNumber" : "Test panCardNumber",
+    "contactPersonName" : "Test contactPersonName",
+    "contactPersonNumber" : "Test contactPersonNumber",
+    "paymentTerms" : "Test paymentTerms",
+    "bankName" : "Test bankName",
+    "accountName" : "Test accountName",
+    "bankAccountNumber" : "Test bankAccountNumber",
+    "ifscCode" : "Test ifscCode",
+    "micr" : "Test micr"
+}
+
+
+###
+PUT {{URL}}/api/companies/1
+Content-Type: application/json
+Authorization: Bearer {{Token}}
+
+{
+    "companyCode" : "Test companyCode 11",
+    "companyName" : "Test companyName",
+    "companyAddress" : "Test companyAddress",
+    "gstn" : "Test gstn",
+    "panCardNumber" : "Test panCardNumber",
+    "contactPersonName" : "Test contactPersonName",
+    "contactPersonNumber" : "Test contactPersonNumber",
+    "paymentTerms" : "Test paymentTerms",
+    "bankName" : "Test bankName",
+    "accountName" : "Test accountName",
+    "bankAccountNumber" : "Test bankAccountNumber",
+    "ifscCode" : "Test ifscCode",
+    "micr" : "Test micr"
+}
+
+
+###
+DELETE {{URL}}/api/companies/2
+Authorization: Bearer {{Token}}
+
+

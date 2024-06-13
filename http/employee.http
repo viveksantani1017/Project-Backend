@@ -1,0 +1,67 @@
+@URL=http://localhost:3000
+@Token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE3MTc4NzU2MzEsImV4cCI6MTc0OTQxMTYzMSwiYXVkIjoiIiwic3ViIjoiIiwicm9sZSI6IkFkbWluIiwidXNlcklkIjoiMSJ9.wkkTCXXNSRj79juQyhZ8bMGoLHcANRyLKSa6YqM2gnE
+
+
+###
+GET {{URL}}/api/employee
+Authorization: Bearer {{Token}}
+
+
+###
+GET {{URL}}/api/employee/3
+Authorization: Bearer {{Token}}
+
+
+###
+POST {{URL}}/api/employee
+Content-Type: application/json
+Authorization: Bearer {{Token}}
+
+{
+    "employeeType":"string",
+    "companyCode":"string",
+    "resumeMasterNumber":3,
+    "name":"string",
+    "alternativeName":"string",
+    "age":25,
+    "skillSet":"string",
+    "experience":2,
+    "timing":"string",
+    "contactNumber1":"string",
+    "contactNumber2":"string",
+    "remarks":"string",
+    "referredBy":"string",
+    "createdBy":"string",
+    "ndaUpload":"string",
+    "vendorProfiles":"string"
+}
+
+
+###
+PUT {{URL}}/api/employee/1
+Content-Type: application/json
+Authorization: Bearer {{Token}}
+
+{
+    "employeeType":"updated",
+    "companyCode":"updated",
+    "resumeMasterNumber":3,
+    "name":"updated",
+    "alternativeName":"updated",
+    "age":25,
+    "skillSet":"updated",
+    "experience":2,
+    "timing":"updated",
+    "contactNumber1":"updated",
+    "contactNumber2":"updated",
+    "remarks":"updated",
+    "referredBy":"updated",
+    "createdBy":"updated",
+    "ndaUpload":"updated",
+    "vendorProfiles":"updated"
+}
+
+
+###
+DELETE {{URL}}/api/employee/2
+Authorization: Bearer {{Token}}
