@@ -8,7 +8,7 @@ Authorization: Bearer {{Token}}
 
 
 ###
-GET {{URL}}/api/customer/3
+GET {{URL}}/api/customer/1
 Authorization: Bearer {{Token}}
 
 
@@ -26,6 +26,7 @@ Authorization: Bearer {{Token}}
     "contactPersonName": "string",
     "contactPersonNumber": "string",
     "paymentTerms": "string",
+    "country": "string"
 }
 
 
@@ -43,6 +44,7 @@ Authorization: Bearer {{Token}}
     "contactPersonName": "updated",
     "contactPersonNumber": "updated",
     "paymentTerms": "updated",
+    "country": "updated"
 }
 
 
