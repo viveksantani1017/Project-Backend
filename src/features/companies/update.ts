@@ -6,19 +6,14 @@ import logger from "../../utils/logger";
 
 interface CustomRequest
 {
-    companyCode: string,
-    companyName: string,
-    companyAddress: string,
-    gstn: string,
-    panCardNumber: string,
-    contactPersonName: string,
-    contactPersonNumber: string,
-    paymentTerms: string,
-    bankName: string,
-    accountName: string,
-    bankAccountNumber: string,
-    ifscCode: string,
-    micr: string,
+    companyCode: string;
+    companyName: string;
+    companyAddress: string;
+    gstn: string;
+    panCardNumber: string;
+    contactPersonName: string;
+    contactPersonNumber: string;
+    paymentTerms: string;
 }
 
 const validator = Joi.object({
@@ -29,12 +24,7 @@ const validator = Joi.object({
     panCardNumber: Joi.string().required(),
     contactPersonName: Joi.string().required(),
     contactPersonNumber: Joi.string().required(),
-    paymentTerms: Joi.string().required(),
-    bankName: Joi.string().required(),
-    accountName: Joi.string().required(),
-    bankAccountNumber: Joi.string().required(),
-    ifscCode: Joi.string().required(),
-    micr: Joi.string().required(),
+    paymentTerms: Joi.string().required()
 });
 
 export async function handle(request: Request, response: Response)

@@ -4,7 +4,7 @@ import prisma from "../../utils/database";
 
 export async function handle(request: Request, response: Response)
 {
-    const count = await prisma.customer.count({ 
+    const count = await prisma.accountDetails.count({ 
         where: 
         { 
             id: parseInt(request.params.id),
@@ -14,11 +14,11 @@ export async function handle(request: Request, response: Response)
 
     if (count == 0)
     {
-        response.status(404).json({ error: "Customer not found" });
+        response.status(404).json({ error: "Account Details not found" });
         return;
     }
 
-    await prisma.customer.update({ 
+    await prisma.accountDetails.update({ 
         data: { isDeleted: true },
         where: 
         { 
