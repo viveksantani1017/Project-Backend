@@ -4,7 +4,7 @@ import prisma from "../../utils/database";
 
 export async function handle(request: Request, response: Response)
 {
-    const count = await prisma.company.count({ 
+    const count = await prisma.company.findFirst({ 
         where: 
         { 
             id: parseInt(request.params.id),
@@ -12,7 +12,7 @@ export async function handle(request: Request, response: Response)
         } 
     });
 
-    if (count == 0)
+    if (count === null)
     {
         response.status(404).json({ error: "Company not found" });
         return;
@@ -26,6 +26,18 @@ export async function handle(request: Request, response: Response)
             isDeleted: false
         } 
     });
+
+    if(count.accountDetailsId != null){
+        await prisma.accountDetails.update({ 
+            data: { isDeleted: true },
+            where: 
+            { 
+                id: count.accountDetailsId,
+                isDeleted: false
+            } 
+        });
+    }
+
 
     response.status(200).send();
 }
