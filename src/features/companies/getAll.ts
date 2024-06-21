@@ -4,6 +4,6 @@ import prisma from "../../utils/database";
 
 export async function handle(_: Request, response: Response)
 {
-    const companies = await prisma.company.findMany({ include:{accountDetails:true}, where: { isDeleted: false} });
+    const companies = await prisma.company.findMany({ include:{accountDetails:true}, where: { isDeleted: false},orderBy:{id:"desc"} });
     response.status(200).json({ companies: companies });
 }

@@ -6,17 +6,24 @@ import requestLogger from "./middleware/requestLogger";
 
 import companiesRouter from "./features/companies/@routes";
 import accountDetailsRouter from "./features/accountDetails/@routes";
-
+const cors = require('cors')
 
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
+const corsOption = {
+    credentials: true,
+    origin: ['http://localhost:3000']
+}
+
+app.use(cors(corsOption));
 
 app.use(requestLogger);
 app.use(express.json());
 
 // Endpoints
+
 app.use('/api/companies', companiesRouter);
 app.use('/api/accountDetails', accountDetailsRouter);
 
