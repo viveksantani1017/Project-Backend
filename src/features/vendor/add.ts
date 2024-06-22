@@ -5,14 +5,16 @@ import prisma from "../../utils/database";
 import logger from "../../utils/logger";
 
 interface CustomRequest {
-    companyCode: string;
-    companyName: string;
-    companyAddress: string;
+    companyId: number;
+    vendorName: string;
+    address: string;
     gstn: string;
     panCardNumber: string;
     contactPersonName: string;
     contactPersonNumber: string;
     paymentTerms: string;
+    gstnUpload: string;
+    pancardUpload: string;
     bankName: String;
     accountName: String;
     accountNumber: String;
@@ -22,14 +24,16 @@ interface CustomRequest {
 }
 
 const validator = Joi.object({
-    companyCode: Joi.string().required(),
-    companyName: Joi.string().required(),
-    companyAddress: Joi.string().required(),
+    companyId: Joi.number().required(),
+    vendorName: Joi.string().required(),
+    address: Joi.string().required(),
     gstn: Joi.string().required(),
     panCardNumber: Joi.string().required(),
     contactPersonName: Joi.string().required(),
     contactPersonNumber: Joi.string().required(),
     paymentTerms: Joi.string().required(),
+    gstnUpload: Joi.string().required(),
+    pancardUpload: Joi.string().required(),
     bankName: Joi.string().required(),
     accountName: Joi.string().required(),
     accountNumber: Joi.string().required(),
@@ -58,20 +62,22 @@ export async function handle(request: Request, response: Response) {
         } as any,
     });
 
-    await prisma.company.create({
+    await prisma.vendor.create({
         data: {
-            companyCode: customRequest.companyCode,
-            companyName: customRequest.companyName,
-            companyAddress: customRequest.companyAddress,
+            companyId: Number(customRequest.companyId),
+            vendorName: customRequest.vendorName,
+            address: customRequest.address,
             gstn: customRequest.gstn,
             panCardNumber: customRequest.panCardNumber,
             contactPersonName: customRequest.contactPersonName,
             contactPersonNumber: customRequest.contactPersonNumber,
             paymentTerms: customRequest.paymentTerms,
+            gstnUpload: customRequest.gstnUpload,
+            pancardUpload: customRequest.pancardUpload,
             accountDetailsId: accountDetails.id,
         } as any,
     });
 
-    logger.info("Company added");
+    logger.info("Vendor added");
     response.status(200).send();
 }

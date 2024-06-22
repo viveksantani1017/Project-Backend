@@ -8,7 +8,7 @@ Authorization: Bearer {{Token}}
 
 
 ###
-GET {{URL}}/api/accountDetails/4
+GET {{URL}}/api/accountDetails/5
 Authorization: Bearer {{Token}}
 
 ###

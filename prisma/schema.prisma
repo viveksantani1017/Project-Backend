@@ -9,51 +9,58 @@ datasource db {
 
 // #region Lookup tables
 
-model employeeType{
+model EmployeeType{
   id Int @id @default(autoincrement())
   name String @db.VarChar(255)
+  employee Employee?
   createdAt DateTime @default(now()) @db.Timestamp(6)
   updatedAt DateTime @default(now()) @db.Timestamp(6)
   isDeleted Boolean @default(false)
 }
-model timingAvailabilty{
+model TimingAvailabilty{
   id Int @id @default(autoincrement())
   name String @db.VarChar(255)
+  employee Employee?
   createdAt DateTime @default(now()) @db.Timestamp(6)
   updatedAt DateTime @default(now()) @db.Timestamp(6)
   isDeleted Boolean @default(false)
 }
-model timesheetApprovalLevel{
+model TimesheetApprovalLevel{
   id Int @id @default(autoincrement())
   name String @db.VarChar(255)
+  project Project?
   createdAt DateTime @default(now()) @db.Timestamp(6)
   updatedAt DateTime @default(now()) @db.Timestamp(6)
   isDeleted Boolean @default(false)
 }
-model technology{
+model Technology{
   id Int @id @default(autoincrement())
   name String @db.VarChar(255)
+  projectEmployee ProjectEmployee?
   createdAt DateTime @default(now()) @db.Timestamp(6)
   updatedAt DateTime @default(now()) @db.Timestamp(6)
   isDeleted Boolean @default(false)
 }
-model allocationType{
+model AllocationType{
   id Int @id @default(autoincrement())
   name String @db.VarChar(255)
+  projectEmployee ProjectEmployee?
   createdAt DateTime @default(now()) @db.Timestamp(6)
   updatedAt DateTime @default(now()) @db.Timestamp(6)
   isDeleted Boolean @default(false)
 }
-model timesheetType{
+model TimesheetType{
   id Int @id @default(autoincrement())
   name String @db.VarChar(255)
+  projectEmployee ProjectEmployee?
   createdAt DateTime @default(now()) @db.Timestamp(6)
   updatedAt DateTime @default(now()) @db.Timestamp(6)
   isDeleted Boolean @default(false)
 }
-model modeOfPayment{
+model ModeOfPayment{
   id Int @id @default(autoincrement())
   name String @db.VarChar(255)
+  projectEmployee ProjectEmployee?
   createdAt DateTime @default(now()) @db.Timestamp(6)
   updatedAt DateTime @default(now()) @db.Timestamp(6)
   isDeleted Boolean @default(false)
@@ -72,6 +79,10 @@ model AccountDetails {
   micr        String   @db.VarChar(255)
   cancelledChequeImageName String   @db.VarChar(255)
   company Company?
+  vendorAccount Vendor? 
+  employeeAccount Employee? @relation("account")
+  additionalAccount Employee? @relation("additionalAccount")
+  projectEmployee ProjectEmployee?
   createdAt   DateTime @default(now()) @db.Timestamp(6)
   updatedAt   DateTime @default(now()) @db.Timestamp(6)
   isDeleted   Boolean  @default(false)
@@ -87,6 +98,132 @@ model Company {
   contactPersonName   String   @db.VarChar(255)
   contactPersonNumber String   @db.VarChar(14)
   paymentTerms        String   @db.VarChar(500)
+  employee            Employee[]
+  vendor              Vendor[]
+  customer            Customer[]
+  accountDetails      AccountDetails @relation(fields: [accountDetailsId], references: [id])
+  accountDetailsId    Int      @db.Int @unique
+  createdAt           DateTime @default(now()) @db.Timestamp(6)
+  updatedAt           DateTime @default(now()) @db.Timestamp(6)
+  isDeleted           Boolean  @default(false)
+}
+
+model Employee {
+  id                 Int          @id @default(autoincrement())
+  employeeType       EmployeeType @relation(fields: [employeeTypeId], references: [id])
+  employeeTypeId     Int           @db.Int @unique
+  company            Company      @relation(fields: [companyId], references: [id])
+  companyId       Int           @db.Int 
+  resumeMasterNumber Int          @db.Int
+  name               String       @db.VarChar(255)
+  alternativeName    String       @db.VarChar(255)
+  age                Int          @db.Int
+  skillSet           String       @db.VarChar(255)
+  experience         Int          @db.Int
+  timingAvailabilty  TimingAvailabilty @relation(fields: [timingAvailabiltyId], references: [id])
+  timingAvailabiltyId      Int         @db.Int @unique
+  contactNumber1     String       @db.VarChar(14)
+  contactNumber2     String       @db.VarChar(14)
+  remarks            String       @db.VarChar(255)
+  referredBy         String       @db.VarChar(255)
+  createdBy          String       @db.VarChar(255)
+  ndaUpload          String       @db.VarChar(255)
+  vendor             Vendor       @relation(fields: [vendorId], references: [id])
+  vendorId           Int          @db.Int @unique
+  accountDetails      AccountDetails @relation("account", fields: [accountDetailsId], references: [id])
+  accountDetailsId    Int      @db.Int @unique
+  additionalAccountDetails      AccountDetails @relation("additionalAccount", fields: [additionalAccountDetailsId], references: [id])
+  additionalAccountDetailsId    Int      @db.Int @unique
+  projectEmployee    ProjectEmployee?
+  createdAt          DateTime     @default(now()) @db.Timestamp(6)
+  updatedAt          DateTime     @default(now()) @db.Timestamp(6)
+  isDeleted          Boolean      @default(false)
+}
+
+model Vendor {
+  id                  Int      @id @default(autoincrement())
+  company             Company @relation(fields: [companyId], references: [id])
+  companyId           Int      @db.Int @unique
+  vendorName          String   @db.VarChar(255)
+  address       String   @db.VarChar(255)
+  gstn                String   @db.VarChar(255)
+  panCardNumber       String   @db.VarChar(255)
+  contactPersonName   String   @db.VarChar(255)
+  contactPersonNumber String   @db.VarChar(14)
+  paymentTerms        String   @db.VarChar(500)
+  gstnUpload          String   @db.VarChar(255)
+  pancardUpload       String   @db.VarChar(255)
+  accountDetails      AccountDetails @relation(fields: [accountDetailsId], references: [id])
+  accountDetailsId    Int      @db.Int @unique
+  employee            Employee?
+  createdAt           DateTime @default(now()) @db.Timestamp(6)
+  updatedAt           DateTime @default(now()) @db.Timestamp(6)
+  isDeleted           Boolean  @default(false)
+}
+
+model Customer {
+  id                  Int      @id @default(autoincrement())
+  company             Company @relation(fields: [companyId], references: [id])
+  companyId           Int      @db.Int @unique
+  name        String   @db.VarChar(255)
+  address     String   @db.VarChar(255)
+  country             String   @db.VarChar(255)
+  gstn                String   @db.VarChar(255)
+  panCardNumber       String   @db.VarChar(255)
+  contactPersonName   String   @db.VarChar(255)
+  contactPersonNumber String   @db.VarChar(14)
+  paymentTerms        String   @db.VarChar(500)
+  project             Project?
+  createdAt           DateTime @default(now()) @db.Timestamp(6)
+  updatedAt           DateTime @default(now()) @db.Timestamp(6)
+  isDeleted           Boolean  @default(false)
+}
+
+model Project {
+  id                       Int      @id @default(autoincrement())
+  projectCode              String   @unique @db.VarChar(255)
+  projectDescription       String   @db.VarChar(255)
+  projectStartDate         DateTime @db.DateTime()
+  projectEndDate           DateTime @db.DateTime()
+  customer                 Customer @relation(fields: [projectCustomerID], references: [id])
+  projectCustomerID        Int      @unique
+  customerRate             String   @db.VarChar(255)
+  rateUnit                 String   @db.VarChar(255)
+  HSCode                   String   @db.VarChar(14)
+  textFields               String   @db.VarChar(500)
+  timesheetApprovalLevel   TimesheetApprovalLevel @relation(fields: [timesheetApprovalLevelID], references: [id])
+  timesheetApprovalLevelID Int      @db.Int @unique
+  projectEmployee          ProjectEmployee[]
+  createdAt           DateTime @default(now()) @db.Timestamp(6)
+  updatedAt           DateTime @default(now()) @db.Timestamp(6)
+  isDeleted           Boolean  @default(false)
+}
+
+model ProjectEmployee {
+  id                       Int      @id @default(autoincrement())
+  Project                 Project @relation(fields: [projectId], references: [id])
+  projectId               Int      @db.Int
+  Employee                Employee @relation(fields: [employeeId], references: [id])
+  employeeId              Int      @db.Int @unique
+  technology              Technology @relation(fields: [technologyId], references: [id])
+  technologyId            Int      @db.Int @unique
+  allocationType          AllocationType @relation(fields: [allocationTypeId], references: [id])
+  allocationTypeId        Int      @db.Int @unique
+  consultantRate          String   @db.VarChar(255)
+  rateUnit                String   @db.VarChar(255)
+  timesheetType           TimesheetType @relation(fields: [timesheetTypeId], references: [id])
+  timesheetTypeId         Int      @db.Int @unique
+  sapModule               String   @db.VarChar(255)
+  employeeStartDate       DateTime @db.DateTime()
+  employeeEndDate         DateTime @db.DateTime()
+  timesheetCycleStartDay Int     @db.Int
+  timesheetCycleEndDay   Int     @db.Int
+  modeOfPayment           ModeOfPayment @relation(fields: [modeOfPaymentId], references: [id])
+  modeOfPaymentId         Int      @db.Int @unique
+  revenue                 Decimal   @db.Decimal(10,2)
+  inactive           Boolean  @default(false)
+  salaryPaymentDays Int     @db.Int
+  tds                Decimal   @db.Decimal(10,2)
   accountDetails      AccountDetails @relation(fields: [accountDetailsId], references: [id])
   accountDetailsId    Int      @db.Int @unique
   createdAt           DateTime @default(now()) @db.Timestamp(6)

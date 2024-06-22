@@ -9,6 +9,9 @@
         "dev": "tsx watch src/server.ts",
         "test": "tsx watch src/test.ts"
     },
+    "prisma": {
+        "seed": "npx ts-node prisma/seed/seed.ts"
+    },
     "author": "",
     "license": "ISC",
     "dependencies": {

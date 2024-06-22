@@ -22,16 +22,20 @@ const storage: StorageEngine = multer.diskStorage({
     },
     filename: function (req, file, cb) {
       cb(null, `${Date.now()}-${file.originalname}`);
+      if(file.fieldname === 'cancelledChequeImage')
+        {
+          req.body.cancelledChequeImageName = `${Date.now()}-${file.originalname}`;
+        }
     }
   });
   
-  const upload = multer({ storage });
+const upload = multer({ storage });
 
 const router = Router();
 
 router.get('/', requireAdmin, $getAll.handle);
 router.get('/:id', requireAdmin, $getById.handle);
-router.post('/',requireAdmin, upload.single('cancelledChequeImage'), $add.handle);
+router.post('/',requireAdmin, upload.fields([{name:'cancelledChequeImage',maxCount:1}]), $add.handle);
 router.put('/:id', requireAdmin, $update.handle);
 router.delete('/:id', requireAdmin, $delete.handle);
 
