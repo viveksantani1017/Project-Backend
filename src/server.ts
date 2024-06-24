@@ -10,6 +10,7 @@ import customerRouter from "./features/customer/@routes";
 import employeeRouter from "./features/employee/@routes";
 import projectRouter from "./features/project/@routes";
 import vendorRouter from "./features/vendor/@routes";
+import projectEmployeeRouter from "./features/projectEmployee/@routes";
 const cors = require('cors')
 
 dotenv.config();
@@ -34,6 +35,7 @@ app.use('/api/customer', customerRouter);
 app.use('/api/employee', employeeRouter);
 app.use('/api/project', projectRouter);
 app.use('/api/vendor', vendorRouter);
+app.use('/api/projectEmployee', projectEmployeeRouter);
 
 
 // MUST BE LAST!

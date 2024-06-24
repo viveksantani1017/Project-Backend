@@ -4,7 +4,12 @@ import prisma from "../../utils/database";
 
 export async function handle(request: Request, response: Response) {
     const company = await prisma.company.findFirst({
-        include: { accountDetails: true },
+        include: {
+            accountDetails: true,
+            customer: true,
+            employee: true,
+            vendor: true,
+        },
         where: {
             id: parseInt(request.params.id),
             isDeleted: false,

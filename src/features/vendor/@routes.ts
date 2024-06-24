@@ -20,6 +20,13 @@ const storage: StorageEngine = multer.diskStorage({
             dir = "uploads/Pancard Images";
         } else if (file.fieldname === "gst") {
             dir = "uploads/GST Images";
+        } else if (
+            file.fieldname === "agreementFile1" ||
+            file.fieldname === "agreementFile2" ||
+            file.fieldname === "agreementFile3" ||
+            file.fieldname === "agreementFile4"
+        ) {
+            dir = "uploads/Agreement Files";
         }
         if (!fs.existsSync(dir)) {
             fs.mkdirSync(dir, { recursive: true });
@@ -29,11 +36,21 @@ const storage: StorageEngine = multer.diskStorage({
     filename: function (req, file, cb) {
         cb(null, `${Date.now()}-${file.originalname}`);
         if (file.fieldname === "cancelledChequeImage") {
-            req.body.cancelledChequeImageName = `${Date.now()}-${file.originalname}`;
+            req.body.cancelledChequeImageName = `${Date.now()}-${
+                file.originalname
+            }`;
         } else if (file.fieldname === "pancard") {
             req.body.pancardUpload = `${Date.now()}-${file.originalname}`;
         } else if (file.fieldname === "gst") {
             req.body.gstnUpload = `${Date.now()}-${file.originalname}`;
+        } else if (file.fieldname === "agreementFile1") {
+            req.body.agreementFileName1 = `${Date.now()}-${file.originalname}`;
+        } else if (file.fieldname === "agreementFile2") {
+            req.body.agreementFileName2 = `${Date.now()}-${file.originalname}`;
+        } else if (file.fieldname === "agreementFile3") {
+            req.body.agreementFileName3 = `${Date.now()}-${file.originalname}`;
+        } else if (file.fieldname === "agreementFile4") {
+            req.body.agreementFileName4 = `${Date.now()}-${file.originalname}`;
         }
     },
 });
@@ -51,6 +68,10 @@ router.post(
         { name: "cancelledChequeImage", maxCount: 1 },
         { name: "pancard", maxCount: 1 },
         { name: "gst", maxCount: 1 },
+        { name: "agreementFile1", maxCount: 1 },
+        { name: "agreementFile2", maxCount: 1 },
+        { name: "agreementFile3", maxCount: 1 },
+        { name: "agreementFile4", maxCount: 1 },
     ]),
     $add.handle
 );

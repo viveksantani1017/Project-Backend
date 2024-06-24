@@ -174,7 +174,7 @@ model Customer {
   contactPersonName   String   @db.VarChar(255)
   contactPersonNumber String   @db.VarChar(14)
   paymentTerms        String   @db.VarChar(500)
-  project             Project?
+  project             Project[]
   customerAgreements   CustomerAgreements[]
   createdAt           DateTime @default(now()) @db.Timestamp(6)
   updatedAt           DateTime @default(now()) @db.Timestamp(6)
@@ -188,7 +188,7 @@ model Project {
   projectStartDate         DateTime @db.DateTime()
   projectEndDate           DateTime @db.DateTime()
   customer                 Customer @relation(fields: [projectCustomerID], references: [id])
-  projectCustomerID        Int      @unique
+  projectCustomerID        Int      @db.Int
   customerRate             String   @db.VarChar(255)
   rateUnit                 String   @db.VarChar(255)
   HSCode                   String   @db.VarChar(14)

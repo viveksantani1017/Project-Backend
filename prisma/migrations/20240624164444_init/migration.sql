@@ -201,7 +201,6 @@ CREATE TABLE `Project` (
     `isDeleted` BOOLEAN NOT NULL DEFAULT false,
 
     UNIQUE INDEX `Project_projectCode_key`(`projectCode`),
-    UNIQUE INDEX `Project_projectCustomerID_key`(`projectCustomerID`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 

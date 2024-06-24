@@ -21,6 +21,10 @@ interface CustomRequest {
     ifscCode: String;
     micr: String;
     cancelledChequeImageName: String;
+    agreementFileName1?: string;
+    agreementFileName2?: string;
+    agreementFileName3?: string;
+    agreementFileName4?: string;
 }
 
 const validator = Joi.object({
@@ -40,6 +44,10 @@ const validator = Joi.object({
     ifscCode: Joi.string().required(),
     micr: Joi.string().required(),
     cancelledChequeImageName: Joi.string().required(),
+    agreementFileName1: Joi.string().optional(),
+    agreementFileName2: Joi.string().optional(),
+    agreementFileName3: Joi.string().optional(),
+    agreementFileName4: Joi.string().optional(),
 });
 
 export async function handle(request: Request, response: Response) {
@@ -48,6 +56,16 @@ export async function handle(request: Request, response: Response) {
         return response
             .status(400)
             .json({ error: "Cancelled Cheque Image is required" });
+    
+    if (
+        !customRequest.agreementFileName1 ||
+        !customRequest.agreementFileName2 ||
+        !customRequest.agreementFileName3 ||
+        !customRequest.agreementFileName4
+    )
+        return response
+            .status(400)
+            .json({ error: "Agreement Files are required" });
     const { error } = validator.validate(customRequest);
     if (error) response.status(400).json({ error: error.message });
 
@@ -62,7 +80,7 @@ export async function handle(request: Request, response: Response) {
         } as any,
     });
 
-    await prisma.vendor.create({
+    const vendor = await prisma.vendor.create({
         data: {
             companyId: Number(customRequest.companyId),
             vendorName: customRequest.vendorName,
@@ -77,6 +95,34 @@ export async function handle(request: Request, response: Response) {
             accountDetailsId: accountDetails.id,
         } as any,
     });
+
+    let agreements:any = [
+        {
+            agreementFilename: customRequest.agreementFileName1,
+            vendorId: vendor.id,
+        },
+        {
+            agreementFilename: customRequest.agreementFileName2,
+            vendorId: vendor.id,
+        },
+        {
+            agreementFilename: customRequest.agreementFileName3,
+            vendorId: vendor.id,
+        },
+        {
+            agreementFilename: customRequest.agreementFileName4,
+            vendorId: vendor.id,
+        },
+    ]
+    
+      await Promise.all(
+        agreements.map(async (agreement:any) => {
+          await prisma.vendorAgreements.create({
+            data: agreement as any,
+          })
+        })
+      )
+    
 
     logger.info("Vendor added");
     response.status(200).send();

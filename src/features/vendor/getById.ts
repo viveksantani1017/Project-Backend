@@ -4,7 +4,14 @@ import prisma from "../../utils/database";
 
 export async function handle(request: Request, response: Response) {
     const vendor = await prisma.vendor.findFirst({
-        include: { accountDetails: true, company: true, employee: true },
+        include: {
+            accountDetails: true,
+            company: {
+                select: { companyName: true },
+            },
+            employee: true,
+            vendorAgreements: true,
+        },
         where: {
             id: parseInt(request.params.id),
             isDeleted: false,
@@ -16,5 +23,10 @@ export async function handle(request: Request, response: Response) {
         return;
     }
 
-    response.status(200).json({ vendor: vendor });
+    const modifiedVendors = {
+        ...vendor,
+        companyName: vendor.company.companyName,
+        company: undefined,
+    };
+    response.status(200).json({ vendors: modifiedVendors });
 }

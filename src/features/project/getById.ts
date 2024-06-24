@@ -5,7 +5,15 @@ import prisma from "../../utils/database";
 export async function handle(request: Request, response: Response)
 {
     const project = await prisma.project.findFirst({ 
-        include:{customer:true,projectEmployee:true,timesheetApprovalLevel:true},
+        include: {
+            customer: {
+                select: { name: true },
+            },
+            projectEmployee: true,
+            timesheetApprovalLevel: {
+                select: { name: true },
+            },
+        },
         where: 
         { 
             id: parseInt(request.params.id),
@@ -19,5 +27,13 @@ export async function handle(request: Request, response: Response)
         return;
     }
     
-    response.status(200).json({ project: project });
+    const modifiedProject = {
+        ...project,
+        customerName: project.customer.name,
+        timesheetApprovalLevelName: project.timesheetApprovalLevel.name,
+        customer: undefined,
+        timesheetApprovalLevel: undefined,
+    };
+
+    response.status(200).json({ project: modifiedProject });
 }
