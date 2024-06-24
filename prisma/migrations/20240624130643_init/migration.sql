@@ -136,8 +136,6 @@ CREATE TABLE `Employee` (
     `updatedAt` TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
     `isDeleted` BOOLEAN NOT NULL DEFAULT false,
 
-    UNIQUE INDEX `Employee_employeeTypeId_key`(`employeeTypeId`),
-    UNIQUE INDEX `Employee_timingAvailabiltyId_key`(`timingAvailabiltyId`),
     UNIQUE INDEX `Employee_vendorId_key`(`vendorId`),
     UNIQUE INDEX `Employee_accountDetailsId_key`(`accountDetailsId`),
     UNIQUE INDEX `Employee_additionalAccountDetailsId_key`(`additionalAccountDetailsId`),
@@ -162,7 +160,6 @@ CREATE TABLE `Vendor` (
     `updatedAt` TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
     `isDeleted` BOOLEAN NOT NULL DEFAULT false,
 
-    UNIQUE INDEX `Vendor_companyId_key`(`companyId`),
     UNIQUE INDEX `Vendor_accountDetailsId_key`(`accountDetailsId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -183,7 +180,6 @@ CREATE TABLE `Customer` (
     `updatedAt` TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
     `isDeleted` BOOLEAN NOT NULL DEFAULT false,
 
-    UNIQUE INDEX `Customer_companyId_key`(`companyId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -206,7 +202,6 @@ CREATE TABLE `Project` (
 
     UNIQUE INDEX `Project_projectCode_key`(`projectCode`),
     UNIQUE INDEX `Project_projectCustomerID_key`(`projectCustomerID`),
-    UNIQUE INDEX `Project_timesheetApprovalLevelID_key`(`timesheetApprovalLevelID`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -235,12 +230,31 @@ CREATE TABLE `ProjectEmployee` (
     `updatedAt` TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
     `isDeleted` BOOLEAN NOT NULL DEFAULT false,
 
-    UNIQUE INDEX `ProjectEmployee_employeeId_key`(`employeeId`),
-    UNIQUE INDEX `ProjectEmployee_technologyId_key`(`technologyId`),
-    UNIQUE INDEX `ProjectEmployee_allocationTypeId_key`(`allocationTypeId`),
-    UNIQUE INDEX `ProjectEmployee_timesheetTypeId_key`(`timesheetTypeId`),
-    UNIQUE INDEX `ProjectEmployee_modeOfPaymentId_key`(`modeOfPaymentId`),
     UNIQUE INDEX `ProjectEmployee_accountDetailsId_key`(`accountDetailsId`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `VendorAgreements` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `agreementFilename` VARCHAR(255) NOT NULL,
+    `vendorId` INTEGER NOT NULL,
+    `createdAt` TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    `updatedAt` TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    `isDeleted` BOOLEAN NOT NULL DEFAULT false,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `CustomerAgreements` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `agreementFilename` VARCHAR(255) NOT NULL,
+    `customerId` INTEGER NOT NULL,
+    `createdAt` TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    `updatedAt` TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    `isDeleted` BOOLEAN NOT NULL DEFAULT false,
+
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -300,3 +314,9 @@ ALTER TABLE `ProjectEmployee` ADD CONSTRAINT `ProjectEmployee_modeOfPaymentId_fk
 
 -- AddForeignKey
 ALTER TABLE `ProjectEmployee` ADD CONSTRAINT `ProjectEmployee_accountDetailsId_fkey` FOREIGN KEY (`accountDetailsId`) REFERENCES `AccountDetails`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `VendorAgreements` ADD CONSTRAINT `VendorAgreements_vendorId_fkey` FOREIGN KEY (`vendorId`) REFERENCES `Vendor`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `CustomerAgreements` ADD CONSTRAINT `CustomerAgreements_customerId_fkey` FOREIGN KEY (`customerId`) REFERENCES `Customer`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
