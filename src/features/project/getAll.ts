@@ -24,5 +24,5 @@ export async function handle(_: Request, response: Response) {
         timesheetApprovalLevel: undefined, // Remove the nested timesheetApprovalLevel object
     }));
 
-    response.status(200).json({ vendors: modifiedProjects });
+    response.status(200).json({ projects: modifiedProjects });
 }
