@@ -36,5 +36,5 @@ export async function handle(_: Request, response: Response) {
         vendor:undefined
     }));
 
-    response.status(200).json({ vendors: modifiedEmployees });
+    response.status(200).json({ employees: modifiedEmployees });
 }
