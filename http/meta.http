@@ -1,0 +1,31 @@
+@URL=http://localhost:5000
+@Token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE3MTc4NzU2MzEsImV4cCI6MTc0OTQxMTYzMSwiYXVkIjoiIiwic3ViIjoiIiwicm9sZSI6IkFkbWluIiwidXNlcklkIjoiMSJ9.wkkTCXXNSRj79juQyhZ8bMGoLHcANRyLKSa6YqM2gnE
+
+
+###
+GET {{URL}}/api/meta/getAllEmployeeTypes
+Authorization: Bearer {{Token}}
+
+###
+GET {{URL}}/api/meta/getAllTimingAvailabilty
+Authorization: Bearer {{Token}}
+
+###
+GET {{URL}}/api/meta/getAlltimesheetApprovalLevels
+Authorization: Bearer {{Token}}
+
+###
+GET {{URL}}/api/meta/getAllTechnologies
+Authorization: Bearer {{Token}}
+
+###
+GET {{URL}}/api/meta/getAllAllocationTypes
+Authorization: Bearer {{Token}}
+
+###
+GET {{URL}}/api/meta/getAllTimesheetTypes
+Authorization: Bearer {{Token}}
+
+###
+GET {{URL}}/api/meta/getAllModeOfPayments
+Authorization: Bearer {{Token}}
