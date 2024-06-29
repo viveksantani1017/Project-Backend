@@ -7,9 +7,11 @@ import requestLogger from "./middleware/requestLogger";
 import accountDetailsRouter from "./features/accountDetails/@routes";
 import companiesRouter from "./features/companies/@routes";
 import customerRouter from "./features/customer/@routes";
+import customerAgreementRouter from "./features/customerAgreement/@routes";
 import employeeRouter from "./features/employee/@routes";
 import projectRouter from "./features/project/@routes";
 import vendorRouter from "./features/vendor/@routes";
+import vendorAgreementRouter from "./features/vendorAgreement/@routes";
 import projectEmployeeRouter from "./features/projectEmployee/@routes";
 import metaRouter from "./features/meta/@routes";
 
@@ -32,11 +34,14 @@ app.use(express.json());
 // Endpoints
 
 app.use('/api/accountDetails', accountDetailsRouter);
+app.use('/api/images', express.static('uploads'));
 app.use('/api/companies', companiesRouter);
 app.use('/api/customer', customerRouter);
+app.use('/api/customerAgreement', customerAgreementRouter);
 app.use('/api/employee', employeeRouter);
 app.use('/api/project', projectRouter);
 app.use('/api/vendor', vendorRouter);
+app.use('/api/vendorAgreement', vendorAgreementRouter);
 app.use('/api/projectEmployee', projectEmployeeRouter);
 app.use('/api/meta', metaRouter);
 
